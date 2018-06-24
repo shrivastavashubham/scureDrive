@@ -18,17 +18,17 @@ public class FolderService implements IFolderService {
 	@Override
 	public Folder getRootFolder(String userName) {
 
-		return folderRepository.findByUserIdUsernameAndRootTrue(userName);
+		return folderRepository.findByUserUsernameAndRootTrue(userName);
 	}
 
 	@Override
 	public Folder addFolder(String userName, String folderName, String parent) {
-		Folder parentFolder = folderRepository.findByUserIdUsernameAndFolderName(userName, parent);
+		Folder parentFolder = folderRepository.findByUserUsernameAndFolderName(userName, parent);
 		Folder folder = new Folder();
 		folder.setFolderName(folderName);
 		folder.setParent(parentFolder);
 		folder.setRoot(false);
-		folder.setUserId(parentFolder.getUserId());
+		folder.setUser(parentFolder.getUser());
 		List<Folder> children = parentFolder.getChildren();
 		children.add(folder);
 		parentFolder.setChildren(children);
@@ -39,7 +39,7 @@ public class FolderService implements IFolderService {
 	@Override
 	public Folder getFolder(String userName, String folderName, String parent) {
 
-		return folderRepository.findByUserIdUsernameAndFolderNameAndParentFolderName(userName, folderName, parent);
+		return folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folderName, parent);
 	}
 
 }

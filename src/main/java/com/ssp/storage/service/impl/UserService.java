@@ -41,12 +41,12 @@ public class UserService implements IUserService {
 					ErrorCode.USERNAME_DUPLICATE.getValue());
 		try {
 			Folder folder = new Folder();
-			folder.setUserId(user);
+			folder.setUser(user);
 			folder.setRoot(true);
 			folder.setFolderName("root");
 			user.setFolders(Arrays.asList(folder));
 			User userResponse = userRepository.save(user);
-			folder.setUserId(userResponse);
+			folder.setUser(userResponse);
 			folderRepository.save(folder);
 			return userResponse;
 		} catch (DataAccessException e) {

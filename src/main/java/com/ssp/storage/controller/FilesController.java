@@ -1,5 +1,12 @@
 package com.ssp.storage.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssp.storage.domain.File;
 import com.ssp.storage.service.IFilesService;
 import com.ssp.storage.web.ResponseEntity;
 
@@ -31,8 +39,24 @@ public class FilesController {
 	}
 
 	@GetMapping("/getFile")
-	public ResponseEntity<?> getFile(@RequestHeader String folder, @RequestHeader String parentFolder,
-			@RequestHeader String userName, @RequestHeader String fileName) {
-		return new ResponseEntity<>(fileService.getFile(folder, parentFolder, userName, fileName), HttpStatus.OK);
+	public void getFile(@RequestHeader String folder, @RequestHeader String parentFolder,
+			@RequestHeader String userName, @RequestHeader String fileName, HttpServletResponse response) {
+		File file = fileService.getFile(folder, parentFolder, userName, fileName);
+		/*
+		 * java.io.File file1 = java.io.File.createTempFile(file.getFileName(), "tmp",
+		 * new java.io.File("/")); try { FileOutputStream fos = new
+		 * FileOutputStream(file1); fos.write(file.getFile()); fos.close(); } catch
+		 * (FileNotFoundException e) { e.printStackTrace(); } catch (IOException e) {
+		 * e.printStackTrace(); }
+		 */
+		response.setContentType("application");
+		response.setHeader("Content-Disposition", "attachment; filename=" + file.getFileName());
+		try {
+			ServletOutputStream sos = response.getOutputStream();
+			sos.write(file.getFile());
+			sos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

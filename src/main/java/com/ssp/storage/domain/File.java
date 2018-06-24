@@ -1,14 +1,11 @@
 package com.ssp.storage.domain;
 
-import java.sql.Blob;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,19 +22,24 @@ public class File {
 	private long id;
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "folderId", referencedColumnName = "id")
+	@JoinColumn(name = "folder_Id", referencedColumnName = "id")
 	@JsonIgnore
-	private Folder folderId;
-	
-	
-	private  byte[] file;
-	
+	private Folder folder;
+
+	private byte[] file;
+
 	private String absolutePath;
-	
+
 	private String fileName;
-	
-	
-	
+	private String extension;
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 
 	public String getFileName() {
 		return fileName;
@@ -63,15 +65,13 @@ public class File {
 		this.id = id;
 	}
 
-	public Folder getFolderId() {
-		return folderId;
+	public Folder getFolder() {
+		return folder;
 	}
 
-	public void setFolderId(Folder folderId) {
-		this.folderId = folderId;
+	public void setFolder(Folder folder) {
+		this.folder = folder;
 	}
-
-
 
 	public byte[] getFile() {
 		return file;
@@ -83,10 +83,8 @@ public class File {
 
 	@Override
 	public String toString() {
-		return "File [id=" + id + ", folderId=" + folderId + ", file=" + file + ", absolutePath=" + absolutePath
+		return "File [id=" + id + ", folderId=" + folder + ", file=" + file + ", absolutePath=" + absolutePath
 				+ ", fileName=" + fileName + "]";
 	}
 
-
-	
 }

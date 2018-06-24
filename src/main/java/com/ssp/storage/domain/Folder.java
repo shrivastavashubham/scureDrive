@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "folder")
@@ -23,15 +25,16 @@ public class Folder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "public.folder_seq")
 	@SequenceGenerator(sequenceName = "public.folder_seq", allocationSize = 1, name = "public.folder_seq")
+	@JsonIgnore
 	private long id;
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PARENTFODERID", referencedColumnName = "id")
+	@JoinColumn(name = "PARENT_FOLDER_ID", referencedColumnName = "id")
 	@JsonIgnore
 	private Folder parent;
 
 	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PARENTFOLDERID")
+	@JoinColumn(name = "PARENT_FOLDER_ID")
 	private List<Folder> children;
 
 	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -39,9 +42,9 @@ public class Folder {
 	private List<File> files;
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	@JsonIgnore
-	private User userId;
+	private User user;
 
 	private boolean root;
 
@@ -95,18 +98,18 @@ public class Folder {
 		this.files = files;
 	}
 
-	public User getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(User userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
 		return "Folder [id=" + id + ", parent=" + parent + ", children=" + children + ", files=" + files + ", userId="
-				+ userId + ", root=" + root + "]";
+				+ user + ", root=" + root + "]";
 	}
 
 }

@@ -6,5 +6,5 @@ import com.ssp.storage.domain.File;
 
 public interface FileRepository extends JpaRepository<File, Long> {
 
-	public File findByFileNameAndFolderIdId(String fileName, Long id);
+	public File findByFileNameAndFolderId(String fileName, Long id);
 }
