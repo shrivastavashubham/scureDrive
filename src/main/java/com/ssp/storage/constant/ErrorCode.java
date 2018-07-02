@@ -2,7 +2,9 @@ package com.ssp.storage.constant;
 
 public enum ErrorCode {
 	EMAIL_DUPLICATE(1, "Email is already registered"), USERNAME_DUPLICATE(2,
-			"Username is already registered"), INVALID_CREDENTIALS(3, "Invalid Login Credentials");
+			"Username is already registered"), INVALID_CREDENTIALS(3, "Invalid Login Credentials"), DOWNLOAD_FAILED(4,
+					"Download Failed"), INVALID_FILE(5, "Invalid File");
+
 	private int key;
 	private String value;
 

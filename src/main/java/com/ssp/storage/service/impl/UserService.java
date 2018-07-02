@@ -52,6 +52,7 @@ public class UserService implements IUserService {
 			folder.setUser(user);
 			folder.setRoot(true);
 			folder.setFolderName("root");
+			folder.setLevel(0);
 			user.setFolders(Arrays.asList(folder));
 			User userResponse = userRepository.save(user);
 			folder.setUser(userResponse);
