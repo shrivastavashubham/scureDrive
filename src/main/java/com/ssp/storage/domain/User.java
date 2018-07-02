@@ -38,12 +38,12 @@ public class User {
 	private String password;
 
 	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "FolderId")
+	@JoinColumn(name = "user_id")
 	@JsonIgnore
 	private List<Folder> folders;
 
 	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "questionsId")
+	@JoinColumn(name = "user_id")
 	private List<UserSecurityQuestion> questions;
 
 	public User() {
@@ -123,4 +123,13 @@ public class User {
 	public String toString() {
 		return new Gson().toJson(this);
 	}
+
+	public List<UserSecurityQuestion> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<UserSecurityQuestion> questions) {
+		this.questions = questions;
+	}
+	
 }

@@ -1,18 +1,19 @@
 package com.ssp.storage.service.impl;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssp.storage.Beans.FileBean;
 import com.ssp.storage.domain.File;
 import com.ssp.storage.domain.Folder;
 import com.ssp.storage.repository.FileRepository;
 import com.ssp.storage.repository.FolderRepository;
+import com.ssp.storage.repository.UserSecurityQuestionRepository;
 import com.ssp.storage.service.IFilesService;
 
 @Service
@@ -23,6 +24,9 @@ public class FilesService implements IFilesService {
 
 	@Autowired
 	FileRepository fileRepository;
+
+	@Autowired
+	UserSecurityQuestionRepository userSecurityQuestionRepository;
 
 	@Override
 	public boolean addFile(MultipartFile file, String parent, String userName) {
@@ -48,11 +52,22 @@ public class FilesService implements IFilesService {
 	}
 
 	@Override
-	public File getFile(String folder, String parentFolder, String userName, String fileName) {
-		Folder parentFolderFile = folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName,
-				folder, parentFolder);
+	public FileBean getFile(String folder, String parentFolder, String userName, String fileName, String tracePath) {
+		Folder parentFolderFile = folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folder,
+				parentFolder);
 		File file = fileRepository.findByFileNameAndFolderId(fileName, parentFolderFile.getId());
-		return file;
+		FileBean fileBean = new FileBean();
+		if (Objects.nonNull(file.getAbsolutePath())) {
+			if (file.getAbsolutePath().equals(tracePath)) {
+				fileBean.setFile(file);
+			}
+			return fileBean;
+		} else {
+			fileBean.setListOfQuestions(userSecurityQuestionRepository.findAllByUserUsername(userName).stream()
+					.map(a -> a.getQuestion()).collect(Collectors.toList()));
+			return fileBean;
+		}
+
 	}
 
 }

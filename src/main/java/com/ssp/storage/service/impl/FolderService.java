@@ -1,10 +1,12 @@
 package com.ssp.storage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssp.storage.Beans.FolderData;
 import com.ssp.storage.domain.Folder;
 import com.ssp.storage.repository.FolderRepository;
 import com.ssp.storage.service.IFolderService;
@@ -16,9 +18,18 @@ public class FolderService implements IFolderService {
 	FolderRepository folderRepository;
 
 	@Override
-	public Folder getRootFolder(String userName) {
+	public FolderData getRootFolder(String userName) {
 
-		return folderRepository.findByUserUsernameAndRootTrue(userName);
+		Folder folder = folderRepository.findByUserUsernameAndRootTrue(userName);
+		
+		FolderData folderData = new FolderData();
+		List<String> listOfFiles = new ArrayList<>();
+		List<String> listOfFolder = new ArrayList<>();
+		folder.getFiles().forEach(x -> listOfFiles.add(x.getFileName()));
+		folderData.setListOfFiles(listOfFiles);
+		folder.getChildren().forEach(x -> listOfFolder.add(x.getFolderName()));
+		folderData.setListOFFolder(listOfFolder);
+		return folderData;
 	}
 
 	@Override
@@ -37,9 +48,18 @@ public class FolderService implements IFolderService {
 	}
 
 	@Override
-	public Folder getFolder(String userName, String folderName, String parent) {
+	public FolderData getFolder(String userName, String folderName, String parent) {
 
-		return folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folderName, parent);
+		Folder folder = folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folderName,
+				parent);
+		FolderData folderData = new FolderData();
+		List<String> listOfFiles = new ArrayList<>();
+		List<String> listOfFolder = new ArrayList<>();
+		folder.getFiles().forEach(x -> listOfFiles.add(x.getFileName()));
+		folderData.setListOfFiles(listOfFiles);
+		folder.getChildren().forEach(x -> listOfFolder.add(x.getFolderName()));
+		folderData.setListOFFolder(listOfFolder);
+		return folderData;
 	}
 
 }

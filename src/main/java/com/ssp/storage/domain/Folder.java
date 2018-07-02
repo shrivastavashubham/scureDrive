@@ -15,8 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "folder")
@@ -108,7 +106,7 @@ public class Folder {
 
 	@Override
 	public String toString() {
-		return "Folder [id=" + id + ", parent=" + parent + ", children=" + children + ", files=" + files + ", userId="
+		return "Folder [id=" + id + ", parent=" + parent + ", children=" + children + ", files=" + "sa" + ", userId="
 				+ user + ", root=" + root + "]";
 	}
 

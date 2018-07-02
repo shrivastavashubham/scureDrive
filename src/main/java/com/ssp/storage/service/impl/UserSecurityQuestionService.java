@@ -41,15 +41,14 @@ public class UserSecurityQuestionService implements IUserSecurityQuestionService
 
 	@Transactional
 	@Override
-	public boolean addSecurityQuestions(String username, String password,
-			List<UserSecurityQuestion> userSecurityQuestionsRequest) throws UserException {
-		if (!userRepository.existsByUsernameAndPassword(username, password))
+	public boolean addSecurityQuestions(User user, List<UserSecurityQuestion> userSecurityQuestionsRequest) throws UserException {
+		/*if (!userRepository.existsByUsernameAndPassword(username, password))
 			throw new UserException(port + ErrorCode.INVALID_CREDENTIALS.getKey(),
 					ErrorCode.INVALID_CREDENTIALS.getValue());
 		User user = userRepository.findByUsername(username);
 		for (UserSecurityQuestion userSecurityQuestion : userSecurityQuestionsRequest) {
 			userSecurityQuestion.setUser(user);
-		}
+		}*/
 		try {
 			userSecurityQuestionRepository.deleteByUser(user);
 			userSecurityQuestionRepository.saveAll(userSecurityQuestionsRequest);
@@ -58,5 +57,19 @@ public class UserSecurityQuestionService implements IUserSecurityQuestionService
 			throw new UserException(port, e.getMessage());
 		}
 	}
-
+	
+	public boolean validate(String username, String password, List<UserSecurityQuestion> requestList) {
+		User user = userRepository.findByUsernameAndPassword(username, password);
+		List<UserSecurityQuestion> list = userSecurityQuestionRepository.findAllByUser(user);
+		for (UserSecurityQuestion userSecurityQuestion : list) {
+			for (UserSecurityQuestion requestSecurityQuestion : requestList) {
+				if (requestSecurityQuestion.getQuestion().equals(userSecurityQuestion.getQuestion())) {
+					if (!userSecurityQuestion.getAnswer().equals(requestSecurityQuestion.getAnswer())) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

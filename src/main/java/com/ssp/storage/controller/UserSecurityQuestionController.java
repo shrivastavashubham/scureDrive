@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssp.storage.domain.User;
 import com.ssp.storage.domain.UserSecurityQuestion;
 import com.ssp.storage.error.AcgError;
 import com.ssp.storage.exception.UserException;
@@ -36,7 +37,7 @@ public class UserSecurityQuestionController {
 	@Autowired
 	IUserSecurityQuestionService userSecurityQuestionService;
 
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<?> getQuestions(@RequestHeader(name = "username") String username,
 			@RequestHeader(name = "password") String password) {
 		try {
@@ -52,12 +53,28 @@ public class UserSecurityQuestionController {
 	}
 
 	@PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateSecurity(@RequestHeader(name = "username") String username,
-			@RequestHeader(name = "password") String password,
+	public ResponseEntity<?> updateSecurity(@RequestBody User user,
 			@Valid @RequestBody List<UserSecurityQuestion> userSecurityQuestionsRequest) {
 		try {
 			return new ResponseEntity<>(
-					userSecurityQuestionService.addSecurityQuestions(username, password, userSecurityQuestionsRequest),
+					userSecurityQuestionService.addSecurityQuestions(user, userSecurityQuestionsRequest),
+					HttpStatus.OK);
+		} catch (UserException e) {
+			logger.error(e.getMessage(), e);
+			return new ResponseEntity<>(new AcgError(e.getErrorCode(), e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> validateSecurity(@RequestHeader String username, @RequestHeader String password,
+			@Valid @RequestBody List<UserSecurityQuestion> list) {
+		try {
+			return new ResponseEntity<>(
+					userSecurityQuestionService.validate(username,password, list),
 					HttpStatus.OK);
 		} catch (UserException e) {
 			logger.error(e.getMessage(), e);
