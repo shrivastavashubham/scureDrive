@@ -29,8 +29,8 @@ public class FilesService implements IFilesService {
 	UserSecurityQuestionRepository userSecurityQuestionRepository;
 
 	@Override
-	public boolean addFile(MultipartFile file, String parent, String userName) {
-		Folder parentFolder = folderRepository.findByUserUsernameAndFolderName(userName, parent);
+	public boolean addFile(MultipartFile file, String parent, String userName, String absolutePath, int level) {
+		Folder parentFolder = folderRepository.findByUserUsernameAndFolderNameAndLevel(userName, parent, level);
 		byte[] bytes = null;
 		try {
 			bytes = file.getBytes();
@@ -44,6 +44,7 @@ public class FilesService implements IFilesService {
 				? file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."))
 				: null);
 		Dfile.setFolder(parentFolder);
+		Dfile.setAbsolutePath(absolutePath);
 		List<File> childFiles = parentFolder.getFiles();
 		childFiles.add(Dfile);
 		if (Objects.nonNull(folderRepository.save(parentFolder)))
@@ -52,9 +53,10 @@ public class FilesService implements IFilesService {
 	}
 
 	@Override
-	public FileBean getFile(String folder, String parentFolder, String userName, String fileName, String tracePath) {
-		Folder parentFolderFile = folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folder,
-				parentFolder);
+	public FileBean getFile(String folder, String parentFolder, String userName, String fileName, String tracePath,
+			int level) {
+		Folder parentFolderFile = folderRepository.findByUserUsernameAndFolderNameAndParentFolderNameAndLevel(userName,
+				folder, parentFolder, level);
 		File file = fileRepository.findByFileNameAndFolderId(fileName, parentFolderFile.getId());
 		FileBean fileBean = new FileBean();
 		if (Objects.nonNull(file.getAbsolutePath())) {

@@ -28,14 +28,14 @@ public class FolderController {
 
 	@GetMapping("/addFolder")
 	public ResponseEntity<?> addFolder(@RequestHeader String userName, @RequestHeader String folderName,
-			@RequestHeader String parent) {
-		return new ResponseEntity<>(folderFilesService.addFolder(userName, folderName, parent), HttpStatus.OK);
+			@RequestHeader String parent, @RequestHeader int level) {
+		return new ResponseEntity<>(folderFilesService.addFolder(userName, folderName, parent, level), HttpStatus.OK);
 	}
 
 	@GetMapping("/getFolder")
 	public ResponseEntity<?> getFolder(@RequestHeader String userName, @RequestHeader String folderName,
-			@RequestHeader String parent) {
-		return new ResponseEntity<>(folderFilesService.getFolder(userName, folderName, parent), HttpStatus.OK);
+			@RequestHeader String parent, @RequestHeader int level) {
+		return new ResponseEntity<>(folderFilesService.getFolder(userName, folderName, parent, level), HttpStatus.OK);
 	}
 
 }

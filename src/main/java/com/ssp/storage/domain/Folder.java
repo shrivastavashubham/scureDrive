@@ -13,11 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "folder")
+@Table(name = "folder", uniqueConstraints = @UniqueConstraint(columnNames = { "PARENT_FOLDER_ID", "user_id", "level",
+		"folderName" }))
 public class Folder {
 
 	@Id
@@ -47,6 +49,16 @@ public class Folder {
 	private boolean root;
 
 	private String folderName;
+
+	private int level;
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	public String getFolderName() {
 		return folderName;

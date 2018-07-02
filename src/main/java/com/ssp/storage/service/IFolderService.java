@@ -7,7 +7,7 @@ public interface IFolderService {
 
 	public FolderData getRootFolder(String userName);
 
-	public Folder addFolder(String userName, String folderName, String parent);
+	public Folder addFolder(String userName, String folderName, String parent, int level);
 	
-	public FolderData getFolder(String userName, String folderName, String parent);
+	public FolderData getFolder(String userName, String folderName, String parent, int level);
 }

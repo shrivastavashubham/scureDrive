@@ -28,13 +28,14 @@ public class FolderService implements IFolderService {
 		folder.getFiles().forEach(x -> listOfFiles.add(x.getFileName()));
 		folderData.setListOfFiles(listOfFiles);
 		folder.getChildren().forEach(x -> listOfFolder.add(x.getFolderName()));
+		
 		folderData.setListOFFolder(listOfFolder);
 		return folderData;
 	}
 
 	@Override
-	public Folder addFolder(String userName, String folderName, String parent) {
-		Folder parentFolder = folderRepository.findByUserUsernameAndFolderName(userName, parent);
+	public Folder addFolder(String userName, String folderName, String parent, int level) {
+		Folder parentFolder = folderRepository.findByUserUsernameAndFolderNameAndLevel(userName, folderName, level);
 		Folder folder = new Folder();
 		folder.setFolderName(folderName);
 		folder.setParent(parentFolder);
@@ -48,10 +49,9 @@ public class FolderService implements IFolderService {
 	}
 
 	@Override
-	public FolderData getFolder(String userName, String folderName, String parent) {
+	public FolderData getFolder(String userName, String folderName, String parent, int level) {
 
-		Folder folder = folderRepository.findByUserUsernameAndFolderNameAndParentFolderName(userName, folderName,
-				parent);
+		Folder folder = folderRepository.findByUserUsernameAndFolderNameAndParentFolderNameAndLevel(userName, folderName, parent, level);
 		FolderData folderData = new FolderData();
 		List<String> listOfFiles = new ArrayList<>();
 		List<String> listOfFolder = new ArrayList<>();

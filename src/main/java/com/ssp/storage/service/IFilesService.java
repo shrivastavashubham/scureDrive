@@ -6,7 +6,7 @@ import com.ssp.storage.Beans.FileBean;
 
 public interface IFilesService {
 
-	public boolean addFile(MultipartFile file, String parent, String userName);
+	public boolean addFile(MultipartFile file, String parent, String userName, String absolutePath, int level);
 	
-	public FileBean getFile(String folder, String parentFolder, String userName, String fileName, String tracePath);
+	public FileBean getFile(String folder, String parentFolder, String userName, String fileName, String tracePath, int level);
 }

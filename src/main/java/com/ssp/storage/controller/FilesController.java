@@ -32,21 +32,15 @@ public class FilesController {
 
 	@PostMapping("/addFile")
 	public ResponseEntity<?> addFile(@RequestBody MultipartFile file, @RequestHeader String parent,
-			@RequestHeader String userName) {
-		return new ResponseEntity<>(fileService.addFile(file, parent, userName), HttpStatus.OK);
+			@RequestHeader String userName, @RequestHeader String absolutePath, @RequestHeader int level) {
+		return new ResponseEntity<>(fileService.addFile(file, parent, userName, absolutePath, level), HttpStatus.OK);
 	}
 
 	@GetMapping("/getFile")
 	public void getFile(@RequestHeader String folder, @RequestHeader String parentFolder,
-			@RequestHeader String userName, @RequestHeader String fileName, HttpServletResponse response, @RequestHeader String tracePath) {
-		FileBean file = fileService.getFile(folder, parentFolder, userName, fileName, tracePath);
-		/*
-		 * java.io.File file1 = java.io.File.createTempFile(file.getFileName(), "tmp",
-		 * new java.io.File("/")); try { FileOutputStream fos = new
-		 * FileOutputStream(file1); fos.write(file.getFile()); fos.close(); } catch
-		 * (FileNotFoundException e) { e.printStackTrace(); } catch (IOException e) {
-		 * e.printStackTrace(); }
-		 */
+			@RequestHeader String userName, @RequestHeader String fileName, HttpServletResponse response,
+			@RequestHeader String tracePath, @RequestHeader int level) {
+		FileBean file = fileService.getFile(folder, parentFolder, userName, fileName, tracePath, level);
 		response.setContentType("application");
 		response.setHeader("Content-Disposition", "attachment; filename=" + file.getFile().getFileName());
 		try {

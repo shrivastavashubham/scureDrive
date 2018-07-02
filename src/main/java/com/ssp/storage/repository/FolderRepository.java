@@ -8,7 +8,8 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
 
 	public Folder findByUserUsernameAndRootTrue(String userName);
 
-	public Folder findByUserUsernameAndFolderName(String userName, String folderName);
+	public Folder findByUserUsernameAndFolderNameAndLevel(String userName, String folderName, int level);
 
-	public Folder findByUserUsernameAndFolderNameAndParentFolderName(String userName, String folderName, String parent);
+	public Folder findByUserUsernameAndFolderNameAndParentFolderNameAndLevel(String userName, String folderName,
+			String parent, int level);
 }
