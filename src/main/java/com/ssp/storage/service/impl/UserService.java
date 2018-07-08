@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.ssp.storage.constant.ErrorCode;
 import com.ssp.storage.domain.Folder;
 import com.ssp.storage.domain.User;
-import com.ssp.storage.domain.UserSecurityQuestion;
 import com.ssp.storage.exception.UserException;
 import com.ssp.storage.repository.FolderRepository;
 import com.ssp.storage.repository.UserRepository;
