@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.ssp.storage.domain.Question;
 import com.ssp.storage.domain.User;
 import com.ssp.storage.domain.UserSecurityQuestion;
 import com.ssp.storage.exception.UserException;
 
 public interface IUserSecurityQuestionService {
 
-	List<String> getQuestions(String username, String password) throws UserException;
+	List<Question> getQuestions(String username, String password) throws UserException;
 
 	boolean addSecurityQuestions(User user, List<UserSecurityQuestion> userSecurityQuestionsRequest) throws UserException;
 

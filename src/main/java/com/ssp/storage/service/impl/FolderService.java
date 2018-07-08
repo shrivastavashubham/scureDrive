@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssp.storage.Beans.FolderData;
+import com.ssp.storage.beans.FolderData;
 import com.ssp.storage.domain.Folder;
 import com.ssp.storage.repository.FolderRepository;
 import com.ssp.storage.service.IFolderService;

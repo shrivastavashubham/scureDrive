@@ -1,4 +1,4 @@
-package com.ssp.storage.Beans;
+package com.ssp.storage.beans;
 
 import java.util.List;
 

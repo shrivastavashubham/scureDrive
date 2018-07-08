@@ -16,14 +16,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 
 @Entity
-@Table(name = "user_security_question", uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "question" }))
+@Table(name = "user_security_question")
 public class UserSecurityQuestion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "public.user_security_question_seq")
 	@SequenceGenerator(sequenceName = "public.user_security_question_seq", allocationSize = 1, name = "public.user_security_question_seq")
 	@JsonIgnore
 	private Long id;
-	private String question;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(referencedColumnName = "id", name = "question_id")
+	private Question question;
 	private String answer;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(referencedColumnName = "id", name = "user_id")
@@ -35,14 +37,6 @@ public class UserSecurityQuestion {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
 	}
 
 	public String getAnswer() {
@@ -66,12 +60,12 @@ public class UserSecurityQuestion {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserSecurityQuestion(Long id, String question, String answer, User user) {
-		super();
-		this.id = id;
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
 		this.question = question;
-		this.answer = answer;
-		this.user = user;
 	}
 
 	@Override

@@ -11,15 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssp.storage.domain.User;
 import com.ssp.storage.error.AcgError;
 import com.ssp.storage.exception.UserException;
 import com.ssp.storage.service.IUserService;
-import com.ssp.storage.vo.Signup;
 import com.ssp.storage.web.ResponseEntity;
 
 @Controller
@@ -49,10 +49,9 @@ public class UserController {
 		}
 	}
 
-	@PostMapping(value = "/signup" /*, consumes= {"application/x-www-form-urlencoded;charset=UTF-8"}*/)
-	public void addCustomer(@ModelAttribute Signup signup/*@RequestBody User user*/) {
-		System.out.println(signup);
-		/*try {
+	@PostMapping(value = "/signup")
+	public ResponseEntity<?> addUser(@RequestBody User user) {
+		try {
 			return new ResponseEntity<>(userService.addUser(user), HttpStatus.OK);
 		} catch (UserException e) {
 			logger.error(e.getMessage(), e);
@@ -61,7 +60,7 @@ public class UserController {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}*/
+		}
 	}
 
 	@GetMapping

@@ -1,6 +1,6 @@
 package com.ssp.storage.service;
 
-import com.ssp.storage.Beans.FolderData;
+import com.ssp.storage.beans.FolderData;
 import com.ssp.storage.domain.Folder;
 
 public interface IFolderService {

@@ -2,7 +2,7 @@ package com.ssp.storage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssp.storage.Beans.FileBean;
+import com.ssp.storage.beans.FileBean;
 import com.ssp.storage.exception.FileException;
 
 public interface IFilesService {

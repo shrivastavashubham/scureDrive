@@ -21,6 +21,7 @@ import com.ssp.storage.domain.User;
 import com.ssp.storage.domain.UserSecurityQuestion;
 import com.ssp.storage.error.AcgError;
 import com.ssp.storage.exception.UserException;
+import com.ssp.storage.service.IQuestionsService;
 import com.ssp.storage.service.IUserSecurityQuestionService;
 import com.ssp.storage.web.ResponseEntity;
 
@@ -37,7 +38,7 @@ public class UserSecurityQuestionController {
 	@Autowired
 	IUserSecurityQuestionService userSecurityQuestionService;
 
-	@GetMapping
+	@GetMapping("/")
 	public ResponseEntity<?> getQuestions(@RequestHeader(name = "username") String username,
 			@RequestHeader(name = "password") String password) {
 		try {
@@ -84,5 +85,13 @@ public class UserSecurityQuestionController {
 			logger.error(e.getMessage(), e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@Autowired
+	IQuestionsService questionsService;
+
+	@GetMapping
+	public ResponseEntity<?> getQuestions() {
+		return new ResponseEntity<>(questionsService.getQuestions(), HttpStatus.OK);
 	}
 }

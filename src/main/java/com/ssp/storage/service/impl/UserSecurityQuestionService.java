@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ssp.storage.constant.ErrorCode;
+import com.ssp.storage.domain.Question;
 import com.ssp.storage.domain.User;
 import com.ssp.storage.domain.UserSecurityQuestion;
 import com.ssp.storage.exception.UserException;
@@ -31,7 +32,7 @@ public class UserSecurityQuestionService implements IUserSecurityQuestionService
 	private int port;
 
 	@Override
-	public List<String> getQuestions(String username, String password) throws UserException {
+	public List<Question> getQuestions(String username, String password) throws UserException {
 		if (!userRepository.existsByUsernameAndPassword(username, password))
 			throw new UserException(port + ErrorCode.INVALID_CREDENTIALS.getKey(),
 					ErrorCode.INVALID_CREDENTIALS.getValue());

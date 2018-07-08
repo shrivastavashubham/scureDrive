@@ -1,14 +1,15 @@
-package com.ssp.storage.Beans;
+package com.ssp.storage.beans;
 
 import java.util.List;
 
 import com.ssp.storage.domain.File;
+import com.ssp.storage.domain.Question;
 
 public class FileBean {
 
 	private File file;
 	
-	private List<String> listOfQuestions;
+	private List<Question> listOfQuestions;
 
 	public File getFile() {
 		return file;
@@ -18,11 +19,11 @@ public class FileBean {
 		this.file = file;
 	}
 
-	public List<String> getListOfQuestions() {
+	public List<Question> getListOfQuestions() {
 		return listOfQuestions;
 	}
 
-	public void setListOfQuestions(List<String> listOfQuestions) {
+	public void setListOfQuestions(List<Question> listOfQuestions) {
 		this.listOfQuestions = listOfQuestions;
 	}
 

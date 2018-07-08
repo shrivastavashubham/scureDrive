@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssp.storage.Beans.FileBean;
+import com.ssp.storage.beans.FileBean;
 import com.ssp.storage.constant.ErrorCode;
 import com.ssp.storage.error.AcgError;
 import com.ssp.storage.service.IFilesService;

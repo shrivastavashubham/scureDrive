@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssp.storage.Beans.FileBean;
+import com.ssp.storage.beans.FileBean;
 import com.ssp.storage.constant.ErrorCode;
 import com.ssp.storage.domain.File;
 import com.ssp.storage.domain.Folder;
