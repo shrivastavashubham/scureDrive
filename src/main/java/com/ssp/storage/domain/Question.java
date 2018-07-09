@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.google.gson.Gson;
-
 @Entity
 @Table(name = "questions")
 public class Question {
@@ -43,11 +41,6 @@ public class Question {
 	public Question() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String toString() {
-		return new Gson().toJson(this);
 	}
 
 }

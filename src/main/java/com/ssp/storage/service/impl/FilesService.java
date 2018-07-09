@@ -1,8 +1,5 @@
 package com.ssp.storage.service.impl;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.ssp.storage.beans.FileBean;
 import com.ssp.storage.constant.ErrorCode;
 import com.ssp.storage.domain.File;
@@ -41,11 +37,6 @@ public class FilesService implements IFilesService {
 
 	@Value("${server.port}")
 	private int port;
-
-	@Value("${from}")
-	private String from;
-	@Value("${password}")
-	private String password;
 
 	@Override
 	public boolean addFile(MultipartFile file, String parent, String userName, String absolutePath, int level) {
@@ -84,10 +75,6 @@ public class FilesService implements IFilesService {
 			if (file.getAbsolutePath().equals(tracePath)) {
 				fileBean.setFile(file);
 			} else {
-				InputStream inputStream = TypeReference.class.getResourceAsStream("/securityAlert.html");
-				String result = new BufferedReader(new InputStreamReader(inputStream)).lines()
-						.collect(Collectors.joining("\n"));
-				Mail.send(from, userRepository.findByUsername(userName).getEmail(), password, result);
 				fileBean.setListOfQuestions(userSecurityQuestionRepository.findAllByUserUsername(userName).stream()
 						.map(a -> a.getQuestion()).collect(Collectors.toList()));
 			}

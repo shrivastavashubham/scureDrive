@@ -18,7 +18,6 @@ import javax.validation.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.google.gson.Gson;
 
 @Entity
 @Table(name = "users")
@@ -121,7 +120,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return new Gson().toJson(this);
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", username=" + username + ", password=" + password + ", folders=" + folders + ", questions="
+				+ questions + "]";
 	}
 
 	public List<UserSecurityQuestion> getQuestions() {
@@ -131,5 +132,5 @@ public class User {
 	public void setQuestions(List<UserSecurityQuestion> questions) {
 		this.questions = questions;
 	}
-	
+
 }

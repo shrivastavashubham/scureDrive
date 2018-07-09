@@ -116,10 +116,4 @@ public class Folder {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Folder [id=" + id + ", parent=" + parent + ", children=" + children + ", files=" + "sa" + ", userId="
-				+ user + ", root=" + root + "]";
-	}
-
 }

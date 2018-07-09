@@ -13,7 +13,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gson.Gson;
 
 @Entity
 @Table(name = "user_security_question")
@@ -66,11 +65,6 @@ public class UserSecurityQuestion {
 
 	public void setQuestion(Question question) {
 		this.question = question;
-	}
-
-	@Override
-	public String toString() {
-		return new Gson().toJson(this);
 	}
 
 }

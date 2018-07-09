@@ -12,7 +12,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-class Mail {
+public class Mail {
 	public static void send(String from, String to, String password, String template) {
 		Properties props = new Properties();
 		props.put("mail.smtp.port", 465);
@@ -20,6 +20,7 @@ class Mail {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.debug", "false");
 		props.put("mail.smtp.ssl.enable", "true");
+
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
