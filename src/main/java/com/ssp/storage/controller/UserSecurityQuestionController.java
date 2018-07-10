@@ -40,7 +40,7 @@ public class UserSecurityQuestionController {
 	@Autowired
 	IUserSecurityQuestionService userSecurityQuestionService;
 
-	@GetMapping("/")
+	@GetMapping("/byUser")
 	public ResponseEntity<?> getQuestions(@RequestHeader(name = "username") String username,
 			@RequestHeader(name = "password") String password) {
 		try {

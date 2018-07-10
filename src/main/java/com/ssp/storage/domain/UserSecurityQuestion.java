@@ -56,7 +56,6 @@ public class UserSecurityQuestion {
 
 	public UserSecurityQuestion() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Question getQuestion() {
